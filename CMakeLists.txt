@@ -13,3 +13,10 @@ if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
       CACHE STRING "")
 endif()
 
+#For third-party packages that don't have an official CMake find module
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/_CMakeModules)
+
+project(PlotterTest)
+add_subdirectory(Plotter)
+add_subdirectory(PlotterTest)
+
