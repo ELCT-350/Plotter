@@ -85,8 +85,11 @@ find_library ( QWT_LIBRARY
 
 set ( QWT_LIBRARIES ${QWT_LIBRARY} )
 
-find_library(QWT_LIBRARY_DEBUG NAMES qwtd)
-message(STATUS "Debug: ${QWT_LIBRARY_DEBUG}")
+if(WIN32)
+  find_library(QWT_LIBRARY_DEBUG NAMES qwtd)
+else(WIN32)
+  set(QWT_LIBRARY_DEBUG ${QWT_LIBRARY})
+endif(WIN32)
 
 
 # try to guess root dir from include dir
@@ -114,6 +117,11 @@ mark_as_advanced (
   QWT_ROOT_DIR
 )
 
+message(STATUS "Include: " ${QWT_INCLUDE_DIRS})
+message(STATUS "Libraries: " ${QWT_LIBRARIES})
+message(STATUS "ImplibDebug: " ${QWT_LIBRARY_DEBUG})
+message(STATUS "Implib: " ${QWT_LIBRARY})
+
 if(QWT_FOUND AND NOT TARGET Qwt::Qwt)
     add_library(Qwt::Qwt SHARED IMPORTED GLOBAL)
     set_target_properties(Qwt::Qwt PROPERTIES
@@ -121,6 +129,6 @@ if(QWT_FOUND AND NOT TARGET Qwt::Qwt)
         INTERFACE_LINK_LIBRARIES ${QWT_LIBRARIES}
         IMPORTED_IMPLIB_DEBUG ${QWT_LIBRARY_DEBUG}
         IMPORTED_IMPLIB ${QWT_LIBRARY}
-        IMPORTED_LOCATION ${QWT_ROOT_DIR}/bin)
+	IMPORTED_LOCATION ${QWT_LIBRARY})
     set_property(TARGET Qwt::Qwt APPEND PROPERTY INTERFACE_LINK_LIBRARIES Qt5::Widgets)
 endif()

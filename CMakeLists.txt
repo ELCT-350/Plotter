@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.15) #CMake will fail if below this version
+cmake_minimum_required (VERSION 3.13) #CMake will fail if below this version
 
 set(CMAKE_CXX_STANDARD 20) #CMake will include necessary compiler flags to enable c++20, if possible
 
